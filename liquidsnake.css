@@ -1,0 +1,43 @@
+/* Basic Styling for the Page */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  margin: 0;
+  flex-direction: column;
+}
+
+/* Canvas styling */
+canvas {
+  background-color: #000;
+  border: 1px solid #ddd;
+  display: none; /* Initially hide the game canvas */
+}
+
+/* Start screen styling */
+#startScreen {
+  text-align: center;
+}
+
+#startScreen button {
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#startScreen button:hover {
+  background-color: #45a049;
+}
+
+/* Score styling */
+#score {
+  margin-top: 20px;
+  font-size: 18px;
+  color: white;
+}
