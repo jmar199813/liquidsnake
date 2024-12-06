@@ -23,6 +23,7 @@ let food = { x: 0, y: 0 };
 
 // Game speed (frames per second)
 let gameSpeed = 100;
+let gameInterval = null;
 
 // Generate a random food position
 function generateFood() {
@@ -105,11 +106,24 @@ function checkCollisions() {
   return false;
 }
 
+// Display the Game Over screen
+function gameOver() {
+  // Stop the game loop
+  clearInterval(gameInterval);
+
+  // Show the Game Over screen
+  document.getElementById('gameOverScreen').style.display = 'block';
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('gameCanvas').style.display = 'none';
+
+  // Remove the keydown event listener when the game is over
+  document.removeEventListener('keydown', changeDirection);
+}
+
 // Game loop
 function gameLoop() {
   if (checkCollisions()) {
-    alert('Game Over! Your score was ' + score);
-    document.location.reload(); // Reload the page to restart the game
+    gameOver(); // Show Game Over screen if collision detected
     return;
   }
 
@@ -121,27 +135,44 @@ function gameLoop() {
 // Set up the game
 function startGame() {
   generateFood(); // Generate initial food
-  document.addEventListener('keydown', changeDirection); // Listen for keyboard events
-  setInterval(gameLoop, gameSpeed); // Start the game loop
+  score = 0; // Reset score
+  snake = [
+    { x: 160, y: 200 },
+    { x: 140, y: 200 },
+    { x: 120, y: 200 },
+  ]; // Reset snake
+  direction = 'RIGHT'; // Reset direction
+  gameInterval = setInterval(gameLoop, gameSpeed); // Start the game loop
+
+  // Add the keydown event listener for controlling the snake
+  document.addEventListener('keydown', changeDirection);
 }
 
 // Show the start screen
 function showStartScreen() {
   document.getElementById('startScreen').style.display = 'block';
   document.getElementById('gameCanvas').style.display = 'none';
+  document.getElementById('gameOverScreen').style.display = 'none';
 }
 
 // Hide the start screen and start the game
 function startNewGame() {
   document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameCanvas').style.display = 'block';
+  document.getElementById('gameOverScreen').style.display = 'none';
   startGame(); // Start the game when spacebar is pressed
 }
 
-// Listen for the Spacebar key press to start the game
+// Listen for the Spacebar key press to start/restart the game
 document.addEventListener('keydown', function(event) {
   if (event.code === 'Space') { // Spacebar key
-    startNewGame();
+    if (document.getElementById('gameOverScreen').style.display === 'block') {
+      // If the game is over, restart the game
+      startNewGame();
+    } else {
+      // If the game isn't over, start the game
+      startNewGame();
+    }
   }
 });
 
