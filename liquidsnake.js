@@ -135,11 +135,15 @@ function showStartScreen() {
 function startNewGame() {
   document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameCanvas').style.display = 'block';
-  startGame(); // Start the game when play button is clicked
+  startGame(); // Start the game when spacebar is pressed
 }
 
-// Listen for the Play button click to start the game
-document.getElementById('playButton').addEventListener('click', startNewGame);
+// Listen for the Spacebar key press to start the game
+document.addEventListener('keydown', function(event) {
+  if (event.code === 'Space') { // Spacebar key
+    startNewGame();
+  }
+});
 
 // Show the start screen when the page loads
 window.onload = showStartScreen;
