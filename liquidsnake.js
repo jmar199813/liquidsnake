@@ -37,12 +37,24 @@ function draw() {
   
   // Draw the snake
   snake.forEach((segment, index) => {
-    ctx.fillStyle = index === 0 ? '#00FF00' : '#008000'; // Head is green, body is dark green
+    // If the segment is the head, color it bright green
+    if (index === 0) {
+      ctx.fillStyle = '#00FF00'; // Head is bright green
+    }
+    // If the segment is the tail (last segment), color it darker green than the body
+    else if (index === snake.length - 1) {
+      ctx.fillStyle = '#004d00'; // Tail is a very dark green
+    } 
+    // Otherwise, it's a body segment, color it dark green
+    else {
+      ctx.fillStyle = '#008000'; // Body is dark green
+    }
+    
     ctx.fillRect(segment.x, segment.y, gridSize, gridSize);
   });
 
   // Draw the food
-  ctx.fillStyle = '#FF0000';
+  ctx.fillStyle = '#FF0000'; // Red food
   ctx.fillRect(food.x, food.y, gridSize, gridSize);
 
   // Draw the score
