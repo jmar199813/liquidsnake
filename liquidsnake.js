@@ -25,6 +25,9 @@ let food = { x: 0, y: 0 };
 let gameSpeed = 100;
 let gameInterval = null;
 
+// Load the eat sound
+const eatSound = new Audio('sounds/eat.mp3');
+
 // Generate a random food position
 function generateFood() {
   food.x = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
@@ -80,6 +83,7 @@ function moveSnake() {
   if (head.x === food.x && head.y === food.y) {
     score += 10;
     generateFood(); // Generate a new food
+    eatSound.play(); // Play the eating sound
   } else {
     snake.pop(); // Remove the tail
   }
